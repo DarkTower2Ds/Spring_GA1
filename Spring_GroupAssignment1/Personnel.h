@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PERSONNEL_H
+#define PERSONNEL_H
 #include <iostream>
 using namespace std;
 
@@ -9,18 +10,21 @@ protected:
 	long salary;
 	char * name;
 	char * city;
-	friend fstream& operator <<(fstream&, const Personnel&);
-	friend fstream& operator >>(fstream&, Personnel&);
-
 public:
 	Personnel();
 	Personnel(int);
 	Personnel(int, int, char *, char *, long);
+
 	int getSSN();
+	static int size();
+
 	void writeToFile(fstream&);
 	void readFromFile(fstream&);
-	friend bool operator ==(int, const Personnel&);
 	ostream& writeToConsole(ostream& outputStream);
 	istream& readFromConsole(istream& inputStream);
-};
 
+	friend bool operator ==(int, const Personnel&);
+	friend fstream& operator <<(fstream&, const Personnel&);
+	friend fstream& operator >>(fstream&, Personnel&);
+};
+#endif

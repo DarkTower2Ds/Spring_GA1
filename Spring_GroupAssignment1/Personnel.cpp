@@ -1,9 +1,8 @@
 #include <iostream>
-#include <cstdlib>
-#include "Personnel.h"
 #include <bitset>
-#include <string>
+#include <cstring>
 #include <fstream>
+#include "Personnel.h"
 using namespace std;
 
 
@@ -15,10 +14,12 @@ Personnel::Personnel() : nameLen(10), cityLen(10)
 	name = new char[nameLen + 1];
 	city = new char[cityLen + 1];
 }
+
 Personnel::Personnel(int SSNin)
 {
 	int SSN = SSNin;
 }
+
 Personnel::Personnel(int ssn, int yob, char *n, char *c, long s) : nameLen(10), cityLen(10)
 {
 	name = new char[nameLen + 1];
@@ -29,9 +30,15 @@ Personnel::Personnel(int ssn, int yob, char *n, char *c, long s) : nameLen(10), 
 	strcpy(city, c);
 	salary = s;
 }
+
 int Personnel::getSSN()
 {
 	return SSN;
+}
+
+int Personnel::size()
+{
+	return 37;
 }
 
 bool operator ==(int x, const Personnel& y)
@@ -47,6 +54,7 @@ void Personnel::writeToFile(fstream& outputStream)
 	outputStream.write(city, cityLen);
 	outputStream.write(reinterpret_cast<const char*>(&salary), sizeof(long));
 }
+
 void Personnel::readFromFile(fstream& inputStream)
 {
 	char * temp = new char[nameLen + cityLen];
@@ -54,10 +62,11 @@ void Personnel::readFromFile(fstream& inputStream)
 	SSN = std::stoi(temp);
 	inputStream.get(temp, 4);
 	YOB = std::stoi(temp);
+	inputStream.read(reinterpret_cast<char*>(&salary), sizeof(salary));
 	inputStream.read(name, nameLen);
 	inputStream.read(city, cityLen);
-	inputStream.read(reinterpret_cast<char*>(&salary), sizeof(salary));
 }
+
 ostream& Personnel::writeToConsole(ostream& outputStream)
 {
 	outputStream << "SSN:" << SSN << endl;
@@ -67,6 +76,7 @@ ostream& Personnel::writeToConsole(ostream& outputStream)
 	outputStream << "Salary:" << salary << endl;
 	return outputStream;
 }
+
 istream& Personnel::readFromConsole(istream& inputStream)
 {
 	char temp[50];

@@ -1,18 +1,34 @@
-#include <string>
+#include <cstring>
 #include <fstream>
 #include <iostream>
-//#include "Personnel.h"
+#include "Database.h"
+#include "Personnel.h"
 using namespace std;
 
-void setup();
-void userInterface();
+//void setup();
+//void userInterface();
 int main()
 {
+	char* thePath = new char[12];
+	cout << "Enter the path: ";
+	cin >> thePath;
+	Database<Personnel> myDB(thePath);
+	cout << "Created" << endl;
+
+	char *tsal = new char[5];
+	strcpy(tsal, "75000");
+	tsal = reinterpret_cast<char*>(&tsal), sizeof(long);
+	cout << "This is a test. 75000 = " << tsal << endl;
+
+	//myDB.getStream().seekp(37 + 9 + 4);
+
+	myDB.modify();
 	//setup(); //opens the file they specify and creates one if it doesnt exist
 	//userInterface(); //main user interface
 	return 0;
 }
 
+/*
 void setup()
 {
 	string fileName;
@@ -33,6 +49,7 @@ void setup()
 	inStream.close();
 	outStream.close();
 }
+
 void userInterface()
 {
 	int userInput;
@@ -64,3 +81,4 @@ void userInterface()
 		}
 	}
 }
+*/
